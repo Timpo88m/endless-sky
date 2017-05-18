@@ -28,7 +28,7 @@ using namespace std;
 Flotsam::Flotsam(const string &commodity, int count)
 	: commodity(commodity), count(count)
 {
-	lifetime = Random::Int(300) + 360;
+	lifetime = Random::Int(1500) + 360;
 }
 
 
@@ -37,7 +37,7 @@ Flotsam::Flotsam(const Outfit *outfit, int count)
 	: outfit(outfit), count(count)
 {
 	// The more the outfit costs, the faster this flotsam should disappear.
-	int lifetimeBase = 300000000 / (outfit->Cost() * count + 1000000);
+	int lifetimeBase = 300000000 / (outfit->Cost() * count + 100000);
 	lifetime = Random::Int(lifetimeBase) + lifetimeBase + 60;
 }
 
@@ -69,7 +69,7 @@ void Flotsam::Place(const Body &source, const Point &dv)
 	velocity = source.Velocity() + dv;
 	angle = Angle::Random();
 	spin = Angle::Random(10.);
-	
+
 	// Special case: allow a harvested outfit item to define its flotsam sprite
 	// using the field that usually defines a secondary weapon's icon.
 	if(outfit && outfit->FlotsamSprite())
@@ -89,18 +89,18 @@ bool Flotsam::Move(list<Effect> &effects)
 	--lifetime;
 	if(lifetime > 0)
 		return true;
-	
-	// This flotsam has reached the end of its life. 
+
+	// This flotsam has reached the end of its life.
 	const Effect *effect = GameData::Effects().Get("flotsam death");
 	for(int i = 0; i < 3; ++i)
 	{
 		effects.push_back(*effect);
-	
+
 		Angle smokeAngle = Angle::Random();
 		velocity += smokeAngle.Unit() * Random::Real();
 		effects.back().Place(position, velocity, smokeAngle);
 	}
-	
+
 	return false;
 }
 
