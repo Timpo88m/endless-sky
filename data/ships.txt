@@ -34,16 +34,16 @@ ship "Aerie"
 		"Heavy Laser" 2
 		"Heavy Laser Turret" 2
 		"Heavy Anti-Missile Turret"
-		
+
 		"NT-200 Nucleovoltaic"
 		"LP072a Battery Pack"
 		"D41-HY Shield Generator"
 		"Large Radar Jammer"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -10 91
 	engine 10 91
 	gun -13 -79 "Heavy Laser"
@@ -90,15 +90,15 @@ ship "Argosy"
 		"Meteor Missile Launcher" 2
 		"Meteor Missile" 70
 		"Blaster Turret" 2
-		
+
 		"RT-I Radiothermal"
 		"LP072a Battery Pack"
 		"D23-QP Shield Generator"
-		
+
 		"Greyhound Plasma Thruster"
 		"Greyhound Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -20 91
 	engine 20 91
 	gun -22 -37 "Energy Blaster"
@@ -107,6 +107,7 @@ ship "Argosy"
 	gun 23 -37 "Meteor Missile Launcher"
 	turret 0 -12 "Blaster Turret"
 	turret 0 8 "Blaster Turret"
+	drone 0 -37
 	explode "tiny explosion" 10
 	explode "small explosion" 25
 	explode "medium explosion" 25
@@ -143,16 +144,16 @@ ship "Arrow"
 		"Sidewinder Missile Launcher" 2
 		"Sidewinder Missile" 100
 		"Anti-Missile Turret"
-		
+
 		"Dwarf Core"
 		"Supercapacitor"
 		"D14-RN Shield Generator"
 		"Small Radar Jammer"
-		
+
 		"A250 Atomic Thruster"
 		"A255 Atomic Steering"
 		"Hyperdrive"
-		
+
 	engine -10 60
 	engine 10 60
 	gun -8 -34 "Sidewinder Missile Launcher"
@@ -195,17 +196,17 @@ ship "Bactrian"
 		"Torpedo" 60
 		"Heavy Laser Turret" 4
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"Fusion Reactor"
 		"LP144a Battery Pack"
 		"D94-YV Shield Generator"
 		"Large Radar Jammer"
 		"Ramscoop"
-		
+
 		"X4700 Ion Thruster"
 		"X5200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -18 230
 	engine 18 230
 	gun -15 -226 "Torpedo Launcher"
@@ -253,13 +254,13 @@ ship "Barb"
 	outfits
 		"Energy Blaster"
 		"Blaster Turret"
-		
+
 		"nGVF-AA Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
 
 		"X1050 Ion Engines"
-		
+
 	engine -10 28
 	engine 9 28
 	gun -9 -29 "Energy Blaster"
@@ -292,13 +293,13 @@ ship "Barb" "Barb (Proton)"
 			"hit force" 180
 	outfits
 		"Proton Gun"
-		
+
 		"nGVF-AA Fuel Cell"
 		Supercapacitor
 		"D14-RN Shield Generator"
 
 		"X1050 Ion Engines"
-		
+
 	engine -10 28
 	engine 9 28
 	gun -9 -29 "Proton Gun"
@@ -335,17 +336,17 @@ ship "Bastion"
 		"Heavy Rocket Launcher" 2
 		"Heavy Rocket" 40
 		"Blaster Turret" 3
-		
+
 		"S3 Thermionic"
 		"LP144a Battery Pack"
 		"nGVF-BB Fuel Cell"
 		"D67-TM Shield Generator"
 		"Water Coolant System"
-		
+
 		"Impala Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -28 85
 	engine 28 85
 	gun -54 -14 "Plasma Cannon"
@@ -389,16 +390,16 @@ ship "Behemoth"
 	outfits
 		"Heavy Laser Turret" 4
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"NT-200 Nucleovoltaic"
 		"LP144a Battery Pack"
 		"D41-HY Shield Generator"
 		"Small Radar Jammer"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Scram Drive"
-		
+
 	engine -34 154
 	engine 34 154
 	gun -27 -83
@@ -409,6 +410,7 @@ ship "Behemoth"
 	turret 58 11 "Heavy Laser Turret"
 	turret -24 78 "Heavy Anti-Missile Turret"
 	turret 24 78 "Heavy Laser Turret"
+	drone 0 11
 	explode "small explosion" 15
 	explode "medium explosion" 25
 	explode "large explosion" 35
@@ -442,15 +444,15 @@ ship "Berserker"
 			"hit force" 450
 	outfits
 		"Beam Laser" 4
-		
+
 		"nGVF-CC Fuel Cell"
 		"LP072a Battery Pack"
 		"D23-QP Shield Generator"
-		
+
 		"X2700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -10 45
 	engine 10 45
 	gun -20 12
@@ -488,16 +490,16 @@ ship "Blackbird"
 			"hit force" 900
 	outfits
 		"Heavy Laser Turret" 2
-		
+
 		"S3 Thermionic"
 		"LP072a Battery Pack"
 		"D23-QP Shield Generator"
 		"Small Radar Jammer"
-		
+
 		"Impala Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -40 55
 	engine 40 55
 	turret -18 0 "Heavy Laser Turret"
@@ -535,15 +537,15 @@ ship "Bounder"
 			"hit force" 450
 	outfits
 		"Blaster Turret" 2
-		
+
 		"nGVF-CC Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -12 44
 	engine 12 44
 	turret -37 4 "Blaster Turret"
@@ -617,15 +619,15 @@ ship "Bulk Freighter"
 		"Sidewinder Missile" 100
 		"Laser Turret" 3
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"RT-I Radiothermal"
 		"LP144a Battery Pack"
 		"D23-QP Shield Generator"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Scram Drive"
-		
+
 	engine -22 198
 	engine 22 198
 	gun -20 -175 "Sidewinder Missile Launcher"
@@ -635,6 +637,7 @@ ship "Bulk Freighter"
 	turret 0 5 "Laser Turret"
 	turret -30 175 "Heavy Anti-Missile Turret"
 	turret 30 175 "Laser Turret"
+	drone 0 -155
 	explode "small explosion" 15
 	explode "medium explosion" 25
 	explode "large explosion" 35
@@ -675,17 +678,17 @@ ship "Carrier"
 		"Meteor Missile" 140
 		"Heavy Laser Turret" 3
 		"Heavy Anti-Missile Turret"
-		
+
 		"Fusion Reactor"
 		"LP288a Battery Pack"
 		"D94-YV Shield Generator"
 		"Large Radar Jammer"
 		"Water Coolant System"
-		
+
 		"X5700 Ion Thruster"
 		"X4200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -35 200
 	engine 35 200
 	gun -16 -176 "Particle Cannon"
@@ -745,15 +748,15 @@ ship "Class C Freighter"
 	outfits
 		"Heavy Laser Turret" 2
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"Fission Reactor"
 		"LP072a Battery Pack"
 		"D94-YV Shield Generator"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Scram Drive"
-		
+
 	engine -22 198
 	engine 22 198
 	turret -12 -155 "Heavy Laser Turret"
@@ -807,21 +810,22 @@ ship "Clipper"
 		"Beam Laser" 2
 		"Javelin Pod" 2
 		"Javelin" 400
-		
+
 		"nGVF-DD Fuel Cell"
 		"LP072a Battery Pack"
 		"D23-QP Shield Generator"
-		
+
 		"Greyhound Plasma Thruster"
 		"Greyhound Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -20 45
 	engine 20 45
 	gun -23 -19 "Javelin Pod"
 	gun 23 -19 "Javelin Pod"
 	gun -12 -7 "Beam Laser"
 	gun 12 -7 "Beam Laser"
+	drone 0 -19
 	explode "tiny explosion" 15
 	explode "small explosion" 20
 	explode "medium explosion" 10
@@ -832,8 +836,6 @@ ship "Clipper"
 
 ship "Combat Drone"
 	sprite "ship/combat drone"
-	licenses
-		Navy
 	attributes
 		category "Drone"
 		"cost" 83000
@@ -852,16 +854,16 @@ ship "Combat Drone"
 			"hit force" 75
 	outfits
 		"Beam Laser"
-		
+
 		"nGVF-AA Fuel Cell"
 		"Supercapacitor"
-		
+
 		"X1700 Ion Thruster"
 		"X1200 Ion Steering"
-		
-	engine -9 29
-	engine 9 29
-	gun 0 -29 "Beam Laser"
+
+	engine -5 14
+	engine 5 14
+	gun 0 -14 "Beam Laser"
 	explode "tiny explosion" 15
 	description "Combat drones are pilotless attack ships used primarily by the Republic Navy. Although very weak and easy to destroy, they can be very effective in large numbers. Because drones do not need a cockpit, they can be filled entirely with equipment and solid metal, which makes their hulls stronger than other small ships."
 
@@ -892,16 +894,16 @@ ship "Corvette"
 	outfits
 		"Heavy Laser" 4
 		"Heavy Laser Turret" 2
-		
+
 		"NT-200 Nucleovoltaic"
 		"LP072a Battery Pack"
 		"D67-TM Shield Generator"
 		"Large Radar Jammer"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -11 118
 	engine 11 118
 	gun -12 -68 "Heavy Laser"
@@ -950,17 +952,17 @@ ship "Cruiser"
 		"Sidewinder Missile" 100
 		"Heavy Laser Turret" 3
 		"Heavy Anti-Missile Turret"
-		
+
 		"Fusion Reactor"
 		"LP288a Battery Pack"
 		"D67-TM Shield Generator"
 		"Large Radar Jammer"
 		"Liquid Nitrogen Cooler"
-		
+
 		"X4700 Ion Thruster"
 		"X4200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -29 156
 	engine 29 156
 	gun -31 -63 "Particle Cannon"
@@ -1009,13 +1011,13 @@ ship "Dagger"
 			"hit force" 180
 	outfits
 		"Beam Laser" 2
-		
+
 		"nGVF-BB Fuel Cell"
 		"D14-RN Shield Generator"
-		
+
 		"X1700 Ion Thruster"
 		"X1200 Ion Steering"
-		
+
 	engine -15 30
 	engine 15 30
 	gun -14 -10 "Beam Laser"
@@ -1052,18 +1054,18 @@ ship "Dreadnought"
 		"Meteor Missile Launcher" 4
 		"Meteor Missile" 140
 		"Plasma Turret" 5
-		
+
 		"Breeder Reactor"
 		"S3 Thermionic"
 		"LP144a Battery Pack"
 		"D41-HY Shield Generator"
 		"Small Radar Jammer"
 		"Liquid Helium Cooler"
-		
+
 		"Orca Plasma Thruster"
 		"Orca Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -25 172
 	engine 25 172
 	gun -10 -167 "Meteor Missile Launcher"
@@ -1112,17 +1114,17 @@ ship "Falcon"
 		"Torpedo Launcher" 2
 		"Torpedo" 60
 		"Quad Blaster Turret" 4
-		
+
 		"Breeder Reactor"
 		"LP144a Battery Pack"
 		"D41-HY Shield Generator"
 		"Large Radar Jammer"
 		"Liquid Nitrogen Cooler"
-		
+
 		"Impala Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -17 143
 	engine 17 143
 	gun -17 -88 "Plasma Cannon"
@@ -1165,14 +1167,14 @@ ship "Finch"
 			"hit force" 180
 	outfits
 		"Beam Laser" 2
-		
+
 		"nGVF-BB Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"Chipmunk Plasma Thruster"
 		"Chipmunk Plasma Steering"
-		
+
 	engine -5 32
 	engine 5 32
 	gun -7 -14 "Beam Laser"
@@ -1208,16 +1210,16 @@ ship "Firebird"
 	outfits
 		"Heavy Laser" 4
 		"Heavy Laser Turret" 2
-		
+
 		"RT-I Radiothermal"
 		"nGVF-AA Fuel Cell"
 		"LP144a Battery Pack"
 		"D41-HY Shield Generator"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -33 65
 	engine 33 65
 	gun -28 -27 "Heavy Laser"
@@ -1260,15 +1262,15 @@ ship "Flivver"
 	outfits
 		"Meteor Missile Launcher" 2
 		"Meteor Missile" 70
-		
+
 		"nGVF-BB Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"A120 Atomic Thruster"
 		"X1200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -16 27
 	engine 16 27
 	gun -6 -31
@@ -1304,20 +1306,21 @@ ship "Freighter"
 	outfits
 		"Blaster Turret" 2
 		"Heavy Anti-Missile Turret"
-		
+
 		"nGVF-EE Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"X2700 Ion Thruster"
 		"X2200 Ion Steering"
 		"Scram Drive"
-		
+
 	engine -9 97
 	engine 9 97
 	turret 0 -52 "Blaster Turret"
 	turret 0 65 "Blaster Turret"
 	turret 0 6 "Heavy Anti-Missile Turret"
+	drone 0 -6
 	explode "tiny explosion" 10
 	explode "small explosion" 30
 	explode "medium explosion" 20
@@ -1356,15 +1359,15 @@ ship "Frigate"
 		"Torpedo Launcher" 2
 		"Torpedo" 60
 		"Blaster Turret" 3
-		
+
 		"NT-200 Nucleovoltaic"
 		"LP144a Battery Pack"
 		"D41-HY Shield Generator"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -26 92
 	engine 26 92
 	gun -10 -83 "Particle Cannon"
@@ -1408,15 +1411,15 @@ ship "Fury"
 			"hit force" 360
 	outfits
 		"Energy Blaster" 4
-		
+
 		"nGVF-CC Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"X2700 Ion Thruster"
 		"X2200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -17 35
 	engine 17 35
 	gun -10 -26
@@ -1456,17 +1459,17 @@ ship "Gunboat"
 	outfits
 		"Heavy Laser" 2
 		"Heavy Laser Turret"
-		
+
 		"RT-I Radiothermal"
 		"LP144a Battery Pack"
 		"D14-RN Shield Generator"
 		"Cargo Scanner"
 		"Outfit Scanner"
-		
+
 		"X3700 Ion Thruster"
 		"X2200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -12 57
 	engine 12 57
 	gun -28 -28 "Heavy Laser"
@@ -1507,16 +1510,16 @@ ship "Hauler"
 		"Meteor Missile" 70
 		"Quad Blaster Turret" 2
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"S3 Thermionic"
 		"LP072a Battery Pack"
 		"D23-QP Shield Generator"
 		"Small Radar Jammer"
-		
+
 		"Greyhound Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -45 122
 	engine 45 122
 	gun -15 -91
@@ -1525,6 +1528,7 @@ ship "Hauler"
 	turret 26 -49 "Heavy Anti-Missile Turret"
 	turret -19 77 "Heavy Anti-Missile Turret"
 	turret 19 77 "Quad Blaster Turret"
+	drone 0 -49
 	explode "tiny explosion" 20
 	explode "small explosion" 35
 	explode "medium explosion" 20
@@ -1561,16 +1565,16 @@ ship "Hauler II"
 		"Meteor Missile" 70
 		"Quad Blaster Turret" 2
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"S3 Thermionic"
 		"LP072a Battery Pack"
 		"D23-QP Shield Generator"
 		"Small Radar Jammer"
-		
+
 		"Greyhound Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -45 160
 	engine 45 160
 	gun -15 -128
@@ -1579,6 +1583,7 @@ ship "Hauler II"
 	turret 26 -85 "Heavy Anti-Missile Turret"
 	turret -19 115 "Heavy Anti-Missile Turret"
 	turret 19 115 "Quad Blaster Turret"
+	drone 0 -85
 	explode "tiny explosion" 10
 	explode "small explosion" 25
 	explode "medium explosion" 30
@@ -1615,16 +1620,16 @@ ship "Hauler III"
 		"Meteor Missile" 70
 		"Quad Blaster Turret" 2
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"S3 Thermionic"
 		"LP072a Battery Pack"
 		"D23-QP Shield Generator"
 		"Small Radar Jammer"
-		
+
 		"Greyhound Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -45 196
 	engine 45 196
 	gun -15 -165
@@ -1633,6 +1638,7 @@ ship "Hauler III"
 	turret 26 -122 "Heavy Anti-Missile Turret"
 	turret -19 151 "Heavy Anti-Missile Turret"
 	turret 19 151 "Quad Blaster Turret"
+	drone 0 -122
 	explode "small explosion" 15
 	explode "medium explosion" 30
 	explode "large explosion" 20
@@ -1666,15 +1672,15 @@ ship "Hawk"
 			"hit force" 450
 	outfits
 		"Heavy Laser" 2
-		
+
 		"nGVF-CC Fuel Cell"
 		"LP036a Battery Pack"
 		"D23-QP Shield Generator"
-		
+
 		"Greyhound Plasma Thruster"
 		"Greyhound Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -24 41
 	engine 24 41
 	gun -9 -17
@@ -1711,15 +1717,15 @@ ship "Headhunter"
 	outfits
 		"Heavy Laser" 2
 		"Heavy Anti-Missile Turret"
-		
+
 		"RT-I Radiothermal"
 		"LP072a Battery Pack"
 		"D23-QP Shield Generator"
-		
+
 		"Greyhound Plasma Thruster"
 		"Greyhound Plasma Steering"
 		"Hyperdrive"
-	
+
 	engine -16 47
 	engine 16 47
 	gun -13 -27 "Heavy Laser"
@@ -1759,11 +1765,11 @@ ship "Heavy Shuttle"
 		"nGVF-AA Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"X2700 Ion Thruster"
 		"X2200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine 6 30
 	engine -6 30
 	gun -7 -37
@@ -1796,14 +1802,14 @@ ship "Lance"
 			"hit force" 180
 	outfits
 		"Beam Laser" 2
-		
+
 		"nGVF-AA Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"X1700 Ion Thruster"
 		"X1200 Ion Steering"
-		
+
 	engine -15 30
 	engine 15 30
 	gun -14 -10 "Beam Laser"
@@ -1839,16 +1845,16 @@ ship "Leviathan"
 	outfits
 		"Particle Cannon" 4
 		"Quad Blaster Turret" 4
-		
+
 		"Fusion Reactor"
 		"LP144a Battery Pack"
 		"D67-TM Shield Generator"
 		"Liquid Helium Cooler"
-		
+
 		"X3700 Ion Thruster"
 		"X4200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -25 125
 	engine 25 125
 	gun -39 -33 "Particle Cannon"
@@ -1894,15 +1900,15 @@ ship "Manta"
 		"Particle Cannon" 4
 		"Meteor Missile Launcher" 2
 		"Meteor Missile" 70
-		
+
 		"RT-I Radiothermal"
 		"LP144a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -33 38
 	engine 33 38
 	gun -21 -35 "Particle Cannon"
@@ -1945,16 +1951,16 @@ ship "Modified Argosy"
 	outfits
 		"Heavy Laser" 4
 		"Heavy Laser Turret" 2
-		
+
 		"NT-200 Nucleovoltaic"
 		"LP072a Battery Pack"
 		"D23-QP Shield Generator"
 		"Small Radar Jammer"
-		
+
 		"Greyhound Plasma Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -20 91
 	engine 20 91
 	gun -22 -37 "Heavy Laser"
@@ -1999,17 +2005,17 @@ ship "Mule"
 		"Sidewinder Missile" 100
 		"Heavy Laser Turret" 3
 		"Heavy Anti-Missile Turret"
-		
+
 		"NT-200 Nucleovoltaic"
 		"LP072a Battery Pack"
 		"D41-HY Shield Generator"
 		"Small Radar Jammer" 2
 		"Ramscoop"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -12 123
 	engine 12 123
 	gun -9 -119 "Sidewinder Missile Launcher"
@@ -2054,16 +2060,16 @@ ship "Nest"
 		"Meteor Missile" 70
 		"Quad Blaster Turret" 2
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"S3 Thermionic"
 		"LP072a Battery Pack"
 		"D41-HY Shield Generator" 2
 		"Large Radar Jammer"
-		
+
 		"Greyhound Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -45 122
 	engine 45 122
 	gun -15 -91
@@ -2108,17 +2114,17 @@ ship "Osprey"
 	outfits
 		"Plasma Cannon" 4
 		"Quad Blaster Turret" 2
-		
+
 		"Breeder Reactor"
 		"LP072a Battery Pack"
 		"D41-HY Shield Generator"
 		"Small Radar Jammer" 2
 		"Liquid Helium Cooler"
-		
+
 		"Impala Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -40 67
 	engine 40 67
 	gun -8 -100 "Plasma Cannon"
@@ -2162,17 +2168,17 @@ ship "Protector"
 		"Torpedo Launcher" 2
 		"Torpedo" 60
 		"Quad Blaster Turret" 6
-		
+
 		"Fusion Reactor"
 		"LP288a Battery Pack"
 		"D67-TM Shield Generator"
 		"Small Radar Jammer" 3
 		"Liquid Nitrogen Cooler"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -11 125
 	engine 11 125
 	gun -15 -100 "Torpedo Launcher"
@@ -2216,16 +2222,16 @@ ship "Quicksilver"
 			"hit force" 600
 	outfits
 		"Particle Cannon" 2
-		
+
 		"RT-I Radiothermal"
 		"LP036a Battery Pack"
 		"D23-QP Shield Generator"
 		"Cooling Ducts"
-		
+
 		"Greyhound Plasma Thruster"
 		"Greyhound Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -17 54
 	engine 17 54
 	gun -6 -38 "Particle Cannon"
@@ -2265,15 +2271,15 @@ ship "Rainmaker"
 		"Energy Blaster" 2
 		"Meteor Missile Launcher" 4
 		"Meteor Missile" 140
-		
+
 		"nGVF-CC Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"X2700 Ion Thruster"
 		"X2200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -8 46
 	engine 8 46
 	gun -10 -30 "Energy Blaster"
@@ -2314,15 +2320,15 @@ ship "Raven"
 			"hit force" 900
 	outfits
 		"Heavy Laser" 4
-		
+
 		"RT-I Radiothermal"
 		"LP072a Battery Pack"
 		"D41-HY Shield Generator"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -12 43
 	engine 12 43
 	gun -10 -33 "Heavy Laser"
@@ -2365,16 +2371,16 @@ ship "Roost"
 		"Meteor Missile" 70
 		"Quad Blaster Turret" 2
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"S3 Thermionic"
 		"LP072a Battery Pack"
 		"D41-HY Shield Generator" 4
 		"Large Radar Jammer"
-		
+
 		"Greyhound Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -45 159
 	engine 45 159
 	gun -15 -128
@@ -2421,17 +2427,17 @@ ship "Scout"
 	outfits
 		"Energy Blaster" 2
 		"Anti-Missile Turret"
-		
+
 		"nGVF-CC Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
 		"Small Radar Jammer"
 		"Ramscoop"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -8 46
 	engine 8 46
 	gun -20 -7 "Energy Blaster"
@@ -2474,11 +2480,11 @@ ship "Shuttle"
 		"nGVF-AA Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"X2700 Ion Thruster"
 		"X2200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine 6 30
 	engine -6 30
 	gun 0 -30
@@ -2518,16 +2524,16 @@ ship "Skein"
 		"Meteor Missile" 70
 		"Quad Blaster Turret" 2
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"S3 Thermionic"
 		"LP072a Battery Pack"
 		"D67-TM Shield Generator" 4
 		"Large Radar Jammer"
-		
+
 		"Greyhound Plasma Thruster"
 		"Impala Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -45 197
 	engine 45 197
 	gun -15 -165
@@ -2575,15 +2581,15 @@ ship "Sparrow"
 			"hit force" 240
 	outfits
 		"Beam Laser" 2
-		
+
 		"nGVF-BB Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"Chipmunk Plasma Thruster"
 		"Chipmunk Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -5 35
 	engine 5 35
 	gun -7 -10
@@ -2620,17 +2626,17 @@ ship "Splinter"
 	outfits
 		"Proton Gun" 2
 		"Blaster Turret" 3
-		
+
 		"RT-I Radiothermal"
 		"LP144a Battery Pack"
 		"D67-TM Shield Generator"
 		"Small Radar Jammer" 2
 		"Water Coolant System"
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -15 115
 	engine 15 115
 	gun -15 -80 "Proton Gun"
@@ -2673,14 +2679,15 @@ ship "Star Barge"
 		"nGVF-BB Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"Chipmunk Plasma Thruster"
 		"Chipmunk Plasma Steering"
 		"Hyperdrive"
-		
+
 	engine -9 38
 	engine 9 38
 	turret 0 -8
+	drone 0 0
 	explode "tiny explosion" 10
 	explode "small explosion" 10
 	description "The Syndicate CT-50 Star Barge is little more than a cluster of cargo containers with an engine at one end and a cockpit on the other. It is a slow and ugly ship, but it can carry enough cargo to earn its captain a steady income even in parts of the galaxy where it is hard to find passengers to carry or courier missions."
@@ -2714,16 +2721,16 @@ ship "Star Queen"
 		"Sidewinder Missile Launcher" 3
 		"Sidewinder Missile" 150
 		"Heavy Anti-Missile Turret" 2
-		
+
 		"NT-200 Nucleovoltaic"
 		"LP072a Battery Pack"
 		"D94-YV Shield Generator"
 		"Small Radar Jammer" 3
-		
+
 		"X3700 Ion Thruster"
 		"X3200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -18 116
 	engine 18 116
 	gun 0 -116 "Sidewinder Missile Launcher"
@@ -2742,8 +2749,6 @@ ship "Star Queen"
 
 ship "Surveillance Drone"
 	sprite "ship/surveillance drone"
-	licenses
-		Navy
 	attributes
 		category "Drone"
 		"cost" 50000
@@ -2763,10 +2768,10 @@ ship "Surveillance Drone"
 	outfits
 		"nGVF-AA Fuel Cell"
 		"Surveillance Pod"
-		
+
 		"X1700 Ion Thruster"
 		"X1200 Ion Steering"
-		
+
 	engine -5 29
 	engine 5 29
 	explode "tiny explosion" 15
@@ -2804,11 +2809,11 @@ ship "Vanguard"
 		"LP072a Battery Pack"
 		"D67-TM Shield Generator"
 		"Liquid Nitrogen Cooler"
-		
+
 		"X3700 Ion Thruster"
 		"X4200 Ion Steering"
 		"Hyperdrive"
-	
+
 	engine -15 130
 	engine 15 130
 	gun 0 -132 "Proton Gun"
@@ -2854,15 +2859,15 @@ ship "Wasp"
 		"Energy Blaster" 2
 		"Javelin Pod"
 		"Javelin" 200
-		
+
 		"nGVF-BB Fuel Cell"
 		"LP036a Battery Pack"
 		"D14-RN Shield Generator"
-		
+
 		"X2700 Ion Thruster"
 		"X2200 Ion Steering"
 		"Hyperdrive"
-		
+
 	engine -6 33
 	engine 6 33
 	gun 0 -38 "Javelin Pod"
