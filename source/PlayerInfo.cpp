@@ -50,7 +50,7 @@ using namespace std;
 void PlayerInfo::Clear()
 {
 	*this = PlayerInfo();
-	
+
 	Random::Seed(time(nullptr));
 }
 
@@ -69,7 +69,7 @@ void PlayerInfo::New()
 {
 	// Clear any previously loaded data.
 	Clear();
-	
+
 	// Load starting conditions from a "start" item in the data files. If no
 	// such item exists, StartConditions defines default values.
 	date = GameData::Start().GetDate();
@@ -77,16 +77,16 @@ void PlayerInfo::New()
 	// Make sure the fleet depreciation object knows it is tracking the player's
 	// fleet, not the planet's stock.
 	depreciation.Init(ships, date.DaysSinceEpoch());
-	
+
 	SetSystem(GameData::Start().GetSystem());
 	SetPlanet(GameData::Start().GetPlanet());
 	accounts = GameData::Start().GetAccounts();
 	GameData::Start().GetConditions().Apply(conditions);
 	UpdateAutoConditions();
-	
+
 	// Generate missions that will be available on the first day.
 	CreateMissions();
-	
+
 	// Add to the list of events that should happen on certain days.
 	for(const auto &it : GameData::Events())
 		if(it.second.GetDate())
@@ -100,10 +100,10 @@ void PlayerInfo::Load(const string &path)
 {
 	// Make sure any previously loaded data is cleared.
 	Clear();
-	
+
 	filePath = path;
 	DataFile file(path);
-	
+
 	hasFullClearance = false;
 	for(const DataNode &child : file)
 	{
@@ -233,14 +233,14 @@ void PlayerInfo::Load(const string &path)
 	// Based on the ships that were loaded, calculate the player's capacity for
 	// cargo and passengers.
 	UpdateCargoCapacities();
-	
+
 	// Strip anything after the "~" from snapshots, so that the file we save
 	// will be the auto-save, not the snapshot.
 	size_t pos = filePath.find('~');
 	size_t namePos = filePath.length() - Files::Name(filePath).length();
 	if(pos != string::npos && pos > namePos)
 		filePath = filePath.substr(0, pos) + ".txt";
-	
+
 	// If a system was not specified in the player data, but the flagship is in
 	// a particular system, set the system to that.
 	if(!planet && !ships.empty())
@@ -253,7 +253,7 @@ void PlayerInfo::Load(const string &path)
 				break;
 			}
 	}
-	
+
 	// If no depreciation record was loaded, every item in the player's fleet
 	// will count as non-depreciated.
 	if(!depreciation.IsLoaded())
@@ -269,7 +269,7 @@ void PlayerInfo::LoadRecent()
 	// Trim trailing whitespace (including newlines) from the path.
 	while(!recentPath.empty() && recentPath.back() <= ' ')
 		recentPath.pop_back();
-	
+
 	if(recentPath.empty())
 		Clear();
 	else
@@ -284,10 +284,10 @@ void PlayerInfo::Save() const
 	// Don't save dead players.
 	if(isDead)
 		return;
-	
+
 	// Remember that this was the most recently saved player.
 	Files::Write(Files::Config() + "recent.txt", filePath + '\n');
-	
+
 	if(filePath.rfind(".txt") == filePath.length() - 4)
 	{
 		// Only update the backups if this save will have a newer date.
@@ -306,7 +306,7 @@ void PlayerInfo::Save() const
 					Files::Copy(files[i + 1], files[i]);
 		}
 	}
-		
+
 	Save(filePath);
 }
 
@@ -332,7 +332,7 @@ void PlayerInfo::ApplyChanges()
 	AddChanges(dataChanges);
 	GameData::ReadEconomy(economy);
 	economy = DataNode();
-	
+
 	// As a result of game data changes (e.g. unloading a mod) it's possible for
 	// the player to end up in an undefined system or planet. In that case, move
 	// them to the starting system to avoid crashing.
@@ -343,7 +343,7 @@ void PlayerInfo::ApplyChanges()
 		system = GameData::Start().GetSystem();
 		planet = GameData::Start().GetPlanet();
 	}
-	
+
 	// For any ship that did not store what system it is in or what planet it is
 	// on, place it with the player. (In practice, every ship ought to have
 	// specified its location, but this is to avoid null locations.)
@@ -354,7 +354,7 @@ void PlayerInfo::ApplyChanges()
 		if(ship->GetSystem() == system)
 			ship->SetPlanet(planet);
 	}
-	
+
 	// Government changes may have changed the player's ship swizzles.
 	for(shared_ptr<Ship> &ship : ships)
 		ship->SetGovernment(GameData::PlayerGovernment());
@@ -372,14 +372,14 @@ void PlayerInfo::ApplyChanges()
 		}
 	if(system)
 		GameData::GetPolitics().Bribe(system->GetGovernment());
-	
+
 	// It is sometimes possible for the player to be landed on a planet where
 	// they do not have access to any services. So, this flag is used to specify
 	// that in this case, the player has access to the planet's services.
 	if(planet && hasFullClearance)
 		planet->Bribe();
 	hasFullClearance = false;
-	
+
 	// Check if any special persons have been destroyed.
 	while(!destroyedPersons.empty())
 	{
@@ -387,19 +387,19 @@ void PlayerInfo::ApplyChanges()
 			destroyedPersons.back()->GetShip()->Destroy();
 		destroyedPersons.pop_back();
 	}
-	
+
 	// Check which planets you have dominated.
 	static const string prefix = "tribute: ";
 	for(auto it = conditions.lower_bound(prefix); it != conditions.end(); ++it)
 	{
 		if(it->first.compare(0, prefix.length(), prefix))
 			break;
-		
+
 		const Planet *planet = GameData::Planets().Find(it->first.substr(prefix.length()));
 		if(planet)
 			GameData::GetPolitics().DominatePlanet(planet);
 	}
-	
+
 	// Make sure all data defined in this saved game is valid.
 	GameData::CheckReferences();
 }
@@ -429,7 +429,7 @@ void PlayerInfo::AddChanges(list<DataNode> &changes)
 				seen.insert(neighbor);
 		}
 	}
-	
+
 	// Only move the changes into my list if they are not already there.
 	if(&changes != &dataChanges)
 		dataChanges.splice(dataChanges.end(), changes);
@@ -485,9 +485,9 @@ void PlayerInfo::SetName(const string &first, const string &last)
 {
 	firstName = first;
 	lastName = last;
-	
+
 	string fileName = first + " " + last;
-	
+
 	// If there are multiple pilots with the same name, append a number to the
 	// pilot name to generate a unique file name.
 	filePath = Files::Saves() + fileName;
@@ -498,7 +498,7 @@ void PlayerInfo::SetName(const string &first, const string &last)
 		if(index++)
 			path += " " + to_string(index);
 		path += ".txt";
-		
+
 		if(!Files::Exists(path))
 		{
 			filePath.swap(path);
@@ -524,7 +524,7 @@ void PlayerInfo::IncrementDate()
 	conditions["day"] = date.Day();
 	conditions["month"] = date.Month();
 	conditions["year"] = date.Year();
-	
+
 	// Check if any special events should happen today.
 	auto it = gameEvents.begin();
 	while(it != gameEvents.end())
@@ -537,12 +537,12 @@ void PlayerInfo::IncrementDate()
 			it = gameEvents.erase(it);
 		}
 	}
-	
+
 	// Check if any missions have failed because of deadlines.
 	for(Mission &mission : missions)
 		if(mission.CheckDeadline(date) && mission.IsVisible())
 			Messages::Add("You failed to meet the deadline for the mission \"" + mission.Name() + "\".");
-	
+
 	// Check what salaries and tribute the player receives.
 	int total[2] = {0, 0};
 	static const string prefix[2] = {"salary: ", "tribute: "};
@@ -565,13 +565,13 @@ void PlayerInfo::IncrementDate()
 		Messages::Add(message);
 		accounts.AddCredits(total[0] + total[1]);
 	}
-	
+
 	// For accounting, keep track of the player's net worth. This is for
 	// calculation of yearly income to determine maximum mortgage amounts.
 	int64_t assets = depreciation.Value(ships, date.DaysSinceEpoch());
 	for(const shared_ptr<Ship> &ship : ships)
 		assets += ship->Cargo().Value(system);
-	
+
 	// Have the player pay salaries, mortgages, etc. and print a message that
 	// summarizes the payments that were made.
 	string message = accounts.Step(assets, Salaries());
@@ -619,7 +619,7 @@ const StellarObject *PlayerInfo::GetStellarObject() const
 {
 	if(!system || !planet)
 		return nullptr;
-	
+
 	double closestDistance = numeric_limits<double>::infinity();
 	const StellarObject *closestObject = nullptr;
 	for(const StellarObject &object : system->Objects())
@@ -627,7 +627,7 @@ const StellarObject *PlayerInfo::GetStellarObject() const
 		{
 			if(!Flagship())
 				return &object;
-			
+
 			double distance = Flagship()->Position().Distance(object.Position());
 			if(distance < closestDistance)
 			{
@@ -672,14 +672,14 @@ int64_t PlayerInfo::Salaries() const
 	const Ship *flagship = Flagship();
 	if(flagship)
 		crew = flagship->Crew() - flagship->RequiredCrew();
-	
+
 	// A ship that is "parked" remains on a planet and requires no salaries.
 	for(const shared_ptr<Ship> &ship : ships)
 		if(!ship->IsParked() && !ship->IsDestroyed())
 			crew += ship->RequiredCrew();
 	if(!crew)
 		return 0;
-	
+
 	// Every crew member except the player receives 100 credits per day.
 	return 100 * (crew - 1);
 }
@@ -715,7 +715,7 @@ const shared_ptr<Ship> &PlayerInfo::FlagshipPtr()
 				break;
 			}
 	}
-	
+
 	static const shared_ptr<Ship> empty;
 	return (flagship && flagship->IsYours()) ? flagship : empty;
 }
@@ -754,10 +754,10 @@ void PlayerInfo::BuyShip(const Ship *model, const string &name)
 		ships.back()->SetIsSpecial();
 		ships.back()->SetIsYours();
 		ships.back()->SetGovernment(GameData::PlayerGovernment());
-		
+
 		accounts.AddCredits(-cost);
 		flagship.reset();
-		
+
 		// Record the transfer of this ship in the depreciation and stock info.
 		depreciation.Buy(*model, day, &stockDepreciation);
 		for(const auto &it : model->Outfits())
@@ -775,12 +775,12 @@ void PlayerInfo::SellShip(const Ship *selected)
 		{
 			int day = date.DaysSinceEpoch();
 			int64_t cost = depreciation.Value(*selected, day);
-			
+
 			// Record the transfer of this ship in the depreciation and stock info.
 			stockDepreciation.Buy(*selected, day, &depreciation);
 			for(const auto &it : selected->Outfits())
 				stock[it.first] += it.second;
-			
+
 			accounts.AddCredits(cost);
 			ships.erase(it);
 			flagship.reset();
@@ -843,7 +843,7 @@ void PlayerInfo::ReorderShip(int fromIndex, int toIndex)
 		return;
 	if(static_cast<unsigned>(toIndex) >= ships.size())
 		return;
-	
+
 	// Reorder the list.
 	shared_ptr<Ship> ship = ships[fromIndex];
 	ships.erase(ships.begin() + fromIndex);
@@ -887,7 +887,7 @@ int64_t PlayerInfo::GetBasis(const string &commodity, int tons) const
 		total += ship->Cargo().Get(commodity);
 	if(!total)
 		return 0;
-	
+
 	auto it = costBasis.find(commodity);
 	int64_t basis = (it == costBasis.end()) ? 0 : it->second;
 	return (basis * tons) / total;
@@ -902,15 +902,15 @@ void PlayerInfo::Land(UI *ui)
 	// This can only be done while landed.
 	if(!system || !planet)
 		return;
-	
+
 	Audio::Play(Audio::Get("landing"));
 	Audio::PlayMusic(planet->MusicName());
-	
+
 	// Mark this planet as visited.
 	Visit(planet);
 	if(planet == travelDestination)
 		travelDestination = nullptr;
-	
+
 	// Remove any ships that have been destroyed or captured.
 	map<string, int> lostCargo;
 	vector<shared_ptr<Ship>>::iterator it = ships.begin();
@@ -926,11 +926,11 @@ void PlayerInfo::Land(UI *ui)
 			// Also, the ship and everything in it should be removed from your
 			// depreciation records. Transfer it to a throw-away record:
 			Depreciation().Buy(**it, date.DaysSinceEpoch(), &depreciation);
-			
+
 			it = ships.erase(it);
 		}
 		else
-			++it; 
+			++it;
 	}
 	// Check for NPCs that have been destroyed without their destruction being
 	// registered, e.g. by self-destruct:
@@ -939,11 +939,11 @@ void PlayerInfo::Land(UI *ui)
 			for(const shared_ptr<Ship> &ship : npc.Ships())
 				if(ship->IsDestroyed())
 					mission.Do(ShipEvent(nullptr, ship, ShipEvent::DESTROY), *this, ui);
-	
+
 	// "Unload" all fighters, so they will get recharged, etc.
 	for(const shared_ptr<Ship> &ship : ships)
 		ship->UnloadBays();
-	
+
 	// Recharge any ships that are landed with you on the planet.
 	bool hasSpaceport = planet->HasSpaceport() && planet->CanUseServices();
 	UpdateCargoCapacities();
@@ -957,20 +957,20 @@ void PlayerInfo::Land(UI *ui)
 	// Adjust cargo cost basis for any cargo lost due to a ship being destroyed.
 	for(const auto &it : lostCargo)
 		AdjustBasis(it.first, -(costBasis[it.first] * it.second) / (cargo.Get(it.first) + it.second));
-	
+
 	// Bring auto conditions up-to-date for missions to check your current status.
 	UpdateAutoConditions();
-	
+
 	// Check for missions that are completed.
 	auto mit = missions.begin();
 	while(mit != missions.end())
 	{
 		Mission &mission = *mit;
 		++mit;
-		
+
 		// If this is a stopover for the mission, perform the stopover action.
 		mission.Do(Mission::STOPOVER, *this, ui);
-		
+
 		if(mission.HasFailed(*this))
 			RemoveMission(Mission::FAIL, mission, ui);
 		else if(mission.CanComplete(*this))
@@ -986,24 +986,24 @@ void PlayerInfo::Land(UI *ui)
 	{
 		Mission &mission = *mit;
 		++mit;
-		
+
 		if(mission.HasFailed(*this))
 			RemoveMission(Mission::FAIL, mission, ui);
 		else if(mission.CanComplete(*this))
 			RemoveMission(Mission::COMPLETE, mission, ui);
 	}
 	UpdateCargoCapacities();
-	
+
 	// Create whatever missions this planet has to offer.
 	if(!freshlyLoaded)
 		CreateMissions();
-	
+
 	// Search for any missions that have failed but for which we are still
 	// holding on to some cargo.
 	set<const Mission *> active;
 	for(const Mission &it : missions)
 		active.insert(&it);
-	
+
 	vector<const Mission *> missionsToRemove;
 	for(const auto &it : cargo.MissionCargo())
 		if(!active.count(it.first))
@@ -1013,7 +1013,7 @@ void PlayerInfo::Land(UI *ui)
 			missionsToRemove.push_back(it.first);
 	for(const Mission *mission : missionsToRemove)
 		cargo.RemoveMissionCargo(mission);
-	
+
 	// Check if the player is doing anything illegal.
 	const Government *gov = GetPlanet()->GetGovernment();
 	string message;
@@ -1041,7 +1041,7 @@ void PlayerInfo::Land(UI *ui)
 		else
 			ui->Push(new Dialog(message));
 	}
-	
+
 	freshlyLoaded = false;
 	flagship.reset();
 }
@@ -1055,30 +1055,30 @@ bool PlayerInfo::TakeOff(UI *ui)
 	// This can only be done while landed.
 	if(!system || !planet)
 		return false;
-	
+
 	flagship.reset();
 	flagship = FlagshipPtr();
 	if(!flagship)
 		return false;
-	
+
 	shouldLaunch = false;
 	Audio::Play(Audio::Get("takeoff"));
-	
+
 	// Jobs are only available when you are landed.
 	availableJobs.clear();
 	availableMissions.clear();
 	doneMissions.clear();
 	stock.clear();
-	
+
 	// Special persons who appeared last time you left the planet, can appear
 	// again.
 	for(const auto &it : GameData::Persons())
 		if(!it.second.IsDestroyed())
 			it.second.GetShip()->SetSystem(nullptr);
-	
+
 	// Store the total cargo counts in case we need to adjust cost bases below.
 	map<string, int> originalTotals = cargo.Commodities();
-	
+
 	// Move the flagship to the start of your list of ships. It does not make
 	// sense that the flagship would change if you are reunited with a different
 	// ship that was higher up the list.
@@ -1094,7 +1094,7 @@ bool PlayerInfo::TakeOff(UI *ui)
 		bool shouldHaveParent = (ship != flagship && !ship->IsParked() && !ship->CanBeCarried());
 		ship->SetParent(shouldHaveParent ? flagship : shared_ptr<Ship>());
 	}
-	
+
 	// Recharge any ships that can be recharged.
 	bool hasSpaceport = planet->HasSpaceport() && planet->CanUseServices();
 	for(const shared_ptr<Ship> &ship : ships)
@@ -1137,7 +1137,7 @@ bool PlayerInfo::TakeOff(UI *ui)
 		Messages::Add("You fired " + to_string(extra) + " crew members because you have no bunks for them.");
 		flagship->Cargo().SetBunks(flagship->Attributes().Get("bunks") - flagship->Crew());
 	}
-	
+
 	// For each fighter and drone you own, try to find a ship that has a bay to
 	// carry it in. Any excess ships will need to be sold.
 	int shipsSold[2] = {0, 0};
@@ -1151,7 +1151,7 @@ bool PlayerInfo::TakeOff(UI *ui)
 			++it;
 			continue;
 		}
-		
+
 		bool fit = true;
 		const string &category = ship->Attributes().Category();
 		bool isFighter = (category == "Fighter");
@@ -1191,12 +1191,12 @@ bool PlayerInfo::TakeOff(UI *ui)
 		if(shipsSold[0])
 			out << shipsSold[0]
 				<< (shipsSold[0] == 1 ? " drone" : " drones");
-		
+
 		out << ", earning " << Format::Number(income) << " credits.";
 		accounts.AddCredits(income);
 		Messages::Add(out.str());
 	}
-	
+
 	// By now, all cargo should have been divvied up among your ships. So, any
 	// mission cargo or passengers left behind cannot be carried, and those
 	// missions have failed.
@@ -1216,11 +1216,11 @@ bool PlayerInfo::TakeOff(UI *ui)
 				Messages::Add("Mission \"" + it.first->Name()
 					+ "\" failed because you do not have enough passenger bunks free.");
 			missionsToRemove.push_back(it.first);
-			
+
 		}
 	for(const Mission *mission : missionsToRemove)
 		RemoveMission(Mission::FAIL, *mission, ui);
-	
+
 	// Any ordinary cargo left behind can be sold.
 	int64_t sold = cargo.Used();
 	income = 0;
@@ -1233,16 +1233,16 @@ bool PlayerInfo::TakeOff(UI *ui)
 		{
 			if(!commodity.second)
 				continue;
-			
+
 			// Figure out how much income you get for selling this cargo.
 			int64_t value = commodity.second * system->Trade(commodity.first);
 			commodityIncome += value;
-			
+
 			int original = originalTotals[commodity.first];
 			auto it = costBasis.find(commodity.first);
 			if(!original || it == costBasis.end() || !it->second)
 				continue;
-			
+
 			// Now, figure out how much of that income is profit by calculating
 			// the cost basis for this cargo (which is just the total cost basis
 			// multiplied by the percent of the cargo you are selling).
@@ -1277,7 +1277,7 @@ bool PlayerInfo::TakeOff(UI *ui)
 			out << ".";
 		Messages::Add(out.str());
 	}
-	
+
 	return true;
 }
 
@@ -1343,7 +1343,7 @@ Mission *PlayerInfo::MissionToOffer(Mission::Location location)
 {
 	if(ships.empty())
 		return nullptr;
-	
+
 	// If a mission can be offered right now, move it to the start of the list
 	// so we know what mission the callback is referring to, and return it.
 	for(auto it = availableMissions.begin(); it != availableMissions.end(); ++it)
@@ -1363,20 +1363,20 @@ Mission *PlayerInfo::BoardingMission(const shared_ptr<Ship> &ship)
 	if(ship->IsSpecial())
 		return nullptr;
 	ship->SetIsSpecial();
-	
+
 	UpdateAutoConditions();
 	boardingMissions.clear();
 	boardingShip = ship;
-	
+
 	bool isEnemy = ship->GetGovernment()->IsEnemy();
 	Mission::Location location = (isEnemy ? Mission::BOARDING : Mission::ASSISTING);
-	
+
 	// Check for available missions.
 	for(const auto &it : GameData::Missions())
 	{
 		if(!it.second.IsAtLocation(location))
 			continue;
-		
+
 		if(it.second.CanOffer(*this))
 		{
 			boardingMissions.push_back(it.second.Instantiate(*this));
@@ -1406,7 +1406,7 @@ void PlayerInfo::HandleBlockedMissions(Mission::Location location, UI *ui)
 {
 	if(ships.empty())
 		return;
-	
+
 	// If a mission can be offered right now, move it to the start of the list
 	// so we know what mission the callback is referring to, and return it.
 	for(auto it = availableMissions.begin(); it != availableMissions.end(); ++it)
@@ -1430,9 +1430,9 @@ void PlayerInfo::MissionCallback(int response)
 	list<Mission> &missionList = availableMissions.empty() ? boardingMissions : availableMissions;
 	if(missionList.empty())
 		return;
-	
+
 	Mission &mission = missionList.front();
-	
+
 	shouldLaunch |= Conversation::RequiresLaunch(response);
 	if(response == Conversation::ACCEPT || response == Conversation::LAUNCH)
 	{
@@ -1473,7 +1473,7 @@ void PlayerInfo::RemoveMission(Mission::Trigger trigger, const Mission &mission,
 			// this first avoids the possibility of an infinite loop, e.g. if a
 			// mission's "on fail" fails the mission itself.
 			doneMissions.splice(doneMissions.end(), missions, it);
-			
+
 			it->Do(trigger, *this, ui);
 			cargo.RemoveMissionCargo(&mission);
 			for(shared_ptr<Ship> &ship : ships)
@@ -1508,10 +1508,10 @@ void PlayerInfo::HandleEvent(const ShipEvent &event, UI *ui)
 			static const int64_t maxRating = 2000000000;
 			rating = min(maxRating, rating + (event.Target()->Cost() + 250000) / 500000);
 		}
-	
+
 	for(Mission &mission : missions)
 		mission.Do(event, *this, ui);
-	
+
 	// If the player's flagship was destroyed, the player is dead.
 	if((event.Type() & ShipEvent::DESTROY) && !ships.empty() && event.Target().get() == Flagship())
 		Die();
@@ -1582,7 +1582,7 @@ bool PlayerInfo::HasSeen(const System *system) const
 			if(planet->IsInSystem(system))
 				return true;
 	}
-	
+
 	for(const Mission &mission : missions)
 	{
 		if(!mission.IsVisible())
@@ -1593,7 +1593,7 @@ bool PlayerInfo::HasSeen(const System *system) const
 			if(planet->IsInSystem(system))
 				return true;
 	}
-	
+
 	return (seen.count(system) || KnowsName(system));
 }
 
@@ -1625,15 +1625,15 @@ bool PlayerInfo::KnowsName(const System *system) const
 {
 	if(HasVisited(system))
 		return true;
-	
+
 	for(const Mission &mission : availableJobs)
 		if(mission.Destination()->IsInSystem(system))
 			return true;
-	
+
 	for(const Mission &mission : missions)
 		if(mission.IsVisible() && mission.Destination()->IsInSystem(system))
 			return true;
-	
+
 	return false;
 }
 
@@ -1644,7 +1644,7 @@ void PlayerInfo::Visit(const System *system)
 {
 	if(!system)
 		return;
-	
+
 	visitedSystems.insert(system);
 	seen.insert(system);
 	for(const System *neighbor : system->Neighbors())
@@ -1667,7 +1667,7 @@ void PlayerInfo::Unvisit(const System *system)
 {
 	if(!system)
 		return;
-	
+
 	visitedSystems.erase(system);
 	for(const StellarObject &object : system->Objects())
 		if(object.GetPlanet())
@@ -1680,7 +1680,7 @@ void PlayerInfo::Unvisit(const Planet *planet)
 {
 	if(!planet)
 		return;
-	
+
 	visitedPlanets.erase(planet);
 }
 
@@ -1738,6 +1738,38 @@ void PlayerInfo::SetTravelDestination(const Planet *planet)
 
 
 
+// Get the planet last landed on.
+const Planet *PlayerInfo::PreviousPlanet() const
+{
+	return previousPlanet;
+}
+
+
+
+// Set the planet last landed on.
+void PlayerInfo::SetPreviousPlanet(const Planet *_planet)
+{
+	previousPlanet = _planet;
+}
+
+
+
+// Get the System last landed on.
+const System *PlayerInfo::PreviousSystem() const
+{
+	return previousSystem;
+}
+
+
+
+// Set the System last landed on.
+void PlayerInfo::SetPreviousSystem(const System *_system)
+{
+	previousSystem = _system;
+}
+
+
+
 // Check which secondary weapon the player has selected.
 const Outfit *PlayerInfo::SelectedWeapon() const
 {
@@ -1751,14 +1783,14 @@ void PlayerInfo::SelectNext()
 {
 	if(!flagship || flagship->Outfits().empty())
 		return;
-	
+
 	// Start with the currently selected weapon, if any.
 	auto it = flagship->Outfits().find(selectedWeapon);
 	if(it == flagship->Outfits().end())
 		it = flagship->Outfits().begin();
 	else
 		++it;
-	
+
 	// Find the next secondary weapon.
 	for( ; it != flagship->Outfits().end(); ++it)
 		if(it->first->Icon())
@@ -1789,7 +1821,7 @@ bool PlayerInfo::SelectShips(const Rectangle &box, bool hasShift)
 	// If shift is not held, the first ship in the box will also become the
 	// player's flagship's target.
 	bool first = !hasShift;
-	
+
 	bool matched = false;
 	for(const shared_ptr<Ship> &ship : ships)
 		if(!ship->IsParked() && ship->GetSystem() == system && ship.get() != Flagship()
@@ -1811,7 +1843,7 @@ bool PlayerInfo::SelectShips(const vector<const Ship *> &stack, bool hasShift)
 	// If shift is not held, the first ship in the stack will also become the
 	// player's flagship's target.
 	bool first = !hasShift;
-	
+
 	// Loop through all the player's ships and check which of them are in the
 	// given stack.
 	bool matched = false;
@@ -1834,7 +1866,7 @@ void PlayerInfo::SelectShip(const Ship *ship, bool hasShift)
 	// If shift is not held down, replace the current selection.
 	if(!hasShift)
 		selectedShips.clear();
-	
+
 	bool first = !hasShift;
 	for(const shared_ptr<Ship> &it : ships)
 		if(it.get() == ship)
@@ -1876,7 +1908,7 @@ void PlayerInfo::SelectGroup(int group, bool hasShift)
 	}
 	else
 		selectedShips.clear();
-	
+
 	// Now, go through and add any ships in the group to the selection. Even if
 	// shift is held they won't be added twice, because we removed them above.
 	for(const shared_ptr<Ship> &ship : ships)
@@ -1928,7 +1960,7 @@ void PlayerInfo::AddStock(const Outfit *outfit, int count)
 	if(count > 0 && stock[outfit] < 0)
 		stock[outfit] = 0;
 	stock[outfit] += count;
-	
+
 	int day = date.DaysSinceEpoch();
 	if(count > 0)
 	{
@@ -2048,7 +2080,7 @@ void PlayerInfo::CreateMissions()
 {
 	boardingMissions.clear();
 	boardingShip.reset();
-	
+
 	// Check for available missions.
 	bool skipJobs = planet && !planet->HasSpaceport();
 	bool hasPriorityMissions = false;
@@ -2058,12 +2090,12 @@ void PlayerInfo::CreateMissions()
 			continue;
 		if(skipJobs && it.second.IsAtLocation(Mission::JOB))
 			continue;
-		
+
 		if(it.second.CanOffer(*this))
 		{
 			list<Mission> &missions =
 				it.second.IsAtLocation(Mission::JOB) ? availableJobs : availableMissions;
-			
+
 			missions.push_back(it.second.Instantiate(*this));
 			if(missions.back().HasFailed(*this))
 				missions.pop_back();
@@ -2071,7 +2103,7 @@ void PlayerInfo::CreateMissions()
 				hasPriorityMissions |= missions.back().HasPriority();
 		}
 	}
-	
+
 	// If any of the available missions are "priority" missions, no other
 	// special missions will be offered in the spaceport.
 	if(hasPriorityMissions)
@@ -2111,7 +2143,7 @@ void PlayerInfo::Autosave() const
 {
 	if(filePath.length() < 4)
 		return;
-	
+
 	string path = filePath.substr(0, filePath.length() - 4) + "~autosave.txt";
 	Save(path);
 }
@@ -2122,9 +2154,9 @@ void PlayerInfo::Save(const string &path) const
 {
 	if(!planet || !system)
 		return;
-	
+
 	DataWriter out(path);
-	
+
 	out.Write("pilot", firstName, lastName);
 	out.Write("date", date.Day(), date.Month(), date.Year());
 	if(system)
@@ -2137,7 +2169,7 @@ void PlayerInfo::Save(const string &path) const
 		out.Write("travel", system->Name());
 	if(travelDestination)
 		out.Write("travel destination", travelDestination->TrueName());
-	
+
 	out.Write("reputation with");
 	out.BeginChild();
 	{
@@ -2146,7 +2178,7 @@ void PlayerInfo::Save(const string &path) const
 				out.Write(it.first, it.second.Reputation());
 	}
 	out.EndChild();
-		
+
 	// Save all the data for all the player's ships.
 	for(const shared_ptr<Ship> &ship : ships)
 	{
@@ -2155,7 +2187,7 @@ void PlayerInfo::Save(const string &path) const
 		if(it != groups.end() && it->second)
 			out.Write("groups", it->second);
 	}
-	
+
 	// Save accounting information, cargo, and cargo cost bases.
 	cargo.Save(out);
 	if(!costBasis.empty())
@@ -2170,7 +2202,7 @@ void PlayerInfo::Save(const string &path) const
 		out.EndChild();
 	}
 	accounts.Save(out);
-	
+
 	if(!stock.empty())
 	{
 		out.Write("stock");
@@ -2195,7 +2227,7 @@ void PlayerInfo::Save(const string &path) const
 		}
 		out.EndChild();
 	}
-	
+
 	// Save all missions (accepted or available).
 	for(const Mission &mission : missions)
 		mission.Save(out);
@@ -2203,7 +2235,7 @@ void PlayerInfo::Save(const string &path) const
 		mission.Save(out, "available job");
 	for(const Mission &mission : availableMissions)
 		mission.Save(out, "available mission");
-	
+
 	// Save any "condition" flags that are set.
 	if(!conditions.empty())
 	{
@@ -2225,7 +2257,7 @@ void PlayerInfo::Save(const string &path) const
 	// loading the game (i.e. because a mission forced them to take off).
 	if(shouldLaunch)
 		out.Write("launching");
-	
+
 	// Save the current setting for the map coloring;
 	out.Write("map coloring", mapColoring);
 	out.Write("map zoom", mapZoom);
@@ -2235,7 +2267,7 @@ void PlayerInfo::Save(const string &path) const
 		// Skip panels where nothing was collapsed.
 		if(it.second.empty())
 			continue;
-		
+
 		out.Write("collapsed", it.first);
 		out.BeginChild();
 		{
@@ -2244,7 +2276,7 @@ void PlayerInfo::Save(const string &path) const
 		}
 		out.EndChild();
 	}
-	
+
 	// Save pending events, and changes that have happened due to past events.
 	for(const GameEvent &event : gameEvents)
 		event.Save(out);
@@ -2255,21 +2287,21 @@ void PlayerInfo::Save(const string &path) const
 		{
 			for(const DataNode &node : dataChanges)
 				out.Write(node);
-		}	
+		}
 		out.EndChild();
 	}
 	GameData::WriteEconomy(out);
-	
+
 	// Check which persons have been captured or destroyed.
 	for(const auto &it : GameData::Persons())
 		if(it.second.IsDestroyed())
 			out.Write("destroyed", it.first);
-	
+
 	// Save a list of systems the player has visited.
 	for(const System *system : visitedSystems)
 		if(!system->Name().empty())
 			out.Write("visited", system->Name());
-	
+
 	// Save a list of planets the player has visited.
 	for(const Planet *planet : visitedPlanets)
 		if(!planet->TrueName().empty())

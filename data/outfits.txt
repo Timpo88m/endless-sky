@@ -282,6 +282,16 @@ outfit "Small Bunk Room"
 	unplunderable 1
 	description "Captains who do not care particularly much about the comfort of their passengers or crew can usually find a way to shove a bunk bed in behind the power generator or to hang a few hammocks from the engines as a makeshift way to make space for more people."
 
+outfit "Specialist: Merchant"
+	category "Special"
+	cost 100000
+	thumbnail "outfit/small bunk room"
+	"mass" 50
+	"bunks" -1
+	"cargo space" -50
+	unplunderable 1
+	description "A traveling merchant who will, with an initial investment, travel with you and conduct business on any world you land on. As compensation for your investment, the merchant will give you 10% of his profits on each world."
+
 outfit "Fuel Pod"
 	category "Systems"
 	cost 20000

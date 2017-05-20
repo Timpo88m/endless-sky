@@ -23,10 +23,12 @@ PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 #include "Interface.h"
 #include "MapDetailPanel.h"
 #include "MissionPanel.h"
+#include "Outfit.h"
 #include "OutfitterPanel.h"
 #include "Planet.h"
 #include "PlayerInfo.h"
 #include "PlayerInfoPanel.h"
+#include "Random.h"
 #include "Ship.h"
 #include "ShipyardPanel.h"
 #include "SpaceportPanel.h"
@@ -49,12 +51,17 @@ PlanetPanel::PlanetPanel(PlayerInfo &player, function<void()> callback)
 	bank.reset(new BankPanel(player));
 	spaceport.reset(new SpaceportPanel(player));
 	hiring.reset(new HiringPanel(player));
-	
+
 	text.SetFont(FontSet::Get(14));
 	text.SetAlignment(WrappedText::JUSTIFIED);
 	text.SetWrapWidth(480);
 	text.Wrap(planet.Description());
-	
+
+	if(player.PreviousPlanet() == player.GetPlanet())
+	{
+		specialistsHandled = true;
+	}
+
 	// Since the loading of landscape images is deferred, make sure that the
 	// landscapes for this system are loaded before showing the planet panel.
 	GameData::Preload(planet.Landscape());
@@ -72,7 +79,7 @@ void PlanetPanel::Step()
 		TakeOffIfReady();
 		return;
 	}
-	
+
 	// If the player starts a new game, exits the shipyard without buying
 	// anything, clicks to the bank, then returns to the shipyard and buys a
 	// ship, make sure they are shown an intro mission.
@@ -92,9 +99,9 @@ void PlanetPanel::Draw()
 {
 	if(player.IsDead())
 		return;
-	
+
 	const Ship *flagship = player.Flagship();
-	
+
 	Information info;
 	info.SetSprite("land", planet.Landscape());
 	bool hasAccess = planet.CanUseServices();
@@ -119,9 +126,9 @@ void PlanetPanel::Draw()
 		info.SetCondition("has shipyard");
 	if(hasShip && planet.HasOutfitter() && hasAccess)
 		info.SetCondition("has outfitter");
-	
+
 	ui.Draw(info, this);
-	
+
 	if(!selectedPanel)
 		text.Draw(Point(-300., 80.), *GameData::Colors().Get("bright"));
 }
@@ -133,7 +140,7 @@ bool PlanetPanel::KeyDown(SDL_Keycode key, Uint16 mod, const Command &command)
 {
 	Panel *oldPanel = selectedPanel;
 	const Ship *flagship = player.Flagship();
-	
+
 	bool hasAccess = planet.CanUseServices();
 	if(key == 'd' && flagship && flagship->CanBeFlagship())
 		requestedLaunch = true;
@@ -196,12 +203,12 @@ bool PlanetPanel::KeyDown(SDL_Keycode key, Uint16 mod, const Command &command)
 	}
 	else
 		return false;
-	
+
 	// If we are here, it is because something happened to change the selected
 	// panel. So, we need to pop the old selected panel:
 	if(oldPanel)
 		GetUI()->Pop(oldPanel);
-	
+
 	return true;
 }
 
@@ -213,7 +220,7 @@ void PlanetPanel::TakeOffIfReady()
 	if(!GetUI()->IsTop(this) && !GetUI()->IsTop(trading.get()) && !GetUI()->IsTop(bank.get())
 			&& !GetUI()->IsTop(spaceport.get()) && !GetUI()->IsTop(hiring.get()))
 		return;
-	
+
 	// Check for any landing missions that have not been offered.
 	Mission *mission = player.MissionToOffer(Mission::LANDING);
 	if(mission)
@@ -221,18 +228,18 @@ void PlanetPanel::TakeOffIfReady()
 		mission->Do(Mission::OFFER, player, GetUI());
 		return;
 	}
-	
+
 	// Check whether the player should be warned before taking off.
 	if(player.ShouldLaunch())
 	{
 		TakeOff();
 		return;
 	}
-	
+
 	// The checks that follow are typically cause by parking or selling
 	// ships or changing outfits.
 	const Ship *flagship = player.Flagship();
-	
+
 	// Are you overbooked? Don't count fireable flagship crew. If your
 	// ship can't hold the required crew, count it as having no fireable
 	// crew rather than a negative number.
@@ -250,7 +257,7 @@ void PlanetPanel::TakeOffIfReady()
 			droneCount += (category == "Drone") - it->BaysFree(false);
 			fighterCount += (category == "Fighter") - it->BaysFree(true);
 		}
-	
+
 	if(fighterCount > 0 || droneCount > 0 || cargoToSell > 0 || overbooked > 0)
 	{
 		ostringstream out;
@@ -284,7 +291,7 @@ void PlanetPanel::TakeOffIfReady()
 				out << fighterCount << " fighters";
 			if(fighterCount > 0 && (droneCount > 0 || cargoToSell > 0))
 				out << (triple ? ", " : " and ");
-		
+
 			if(droneCount == 1)
 				out << "a drone";
 			else if(droneCount > 0)
@@ -303,7 +310,46 @@ void PlanetPanel::TakeOffIfReady()
 		requestedLaunch = false;
 		return;
 	}
-	
+
+	// If player has specialists in fleet that generate or cost extra income only TakeOff
+	// inform user of expenses and gains.
+	if(!specialistsHandled)
+	{
+		bool hasSpecialists = false;
+		int  countMerchants = 0;
+
+		for(const auto &it1 : player.Ships())
+		{
+			for(const auto &it2 : it1->Outfits())
+			{
+				if(it2.first->Name() == "Specialist: Merchant")
+				{
+					hasSpecialists = true;
+					countMerchants++;
+				}
+			}
+		}
+
+		if(hasSpecialists)
+		{
+			ostringstream out;
+
+			// A cap of 4000 credits per 50 tons of goods for out of system trades.
+			// A cap of 1000 credits per 50 tons of goods for in system trades.
+			int64_t specialistIncome = countMerchants *
+				Random::Int(player.PreviousSystem() == player.GetSystem() ? 1000 : 4000);
+			player.Accounts().AddCredits(specialistIncome);
+			specialistsHandled = true;
+
+			out << "Your " << (countMerchants > 1 ? "merchants " : "merchant ")
+				<< "made " << specialistIncome * 10 << " credits, and have given "
+				<< "you a 10% cut, totalling " << specialistIncome << " credits.";
+			GetUI()->Push(new Dialog(this, &PlanetPanel::TakeOff, out.str()));
+			requestedLaunch = false;
+			return;
+		}
+	}
+
 	// There was no need to ask the player whether we can get rid of anything,
 	// so go ahead and take off.
 	TakeOff();
@@ -314,6 +360,9 @@ void PlanetPanel::TakeOffIfReady()
 void PlanetPanel::TakeOff()
 {
 	player.Save();
+	player.SetPreviousPlanet(player.GetPlanet());
+	player.SetPreviousSystem(player.GetSystem());
+
 	if(player.TakeOff(GetUI()))
 	{
 		if(callback)
